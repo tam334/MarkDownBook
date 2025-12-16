@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Button Height="30" Width="100" Click="OnClickFirefox" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top">Firefox</Button>
+        <Button Height="30" Width="100" Click="OnClickVisualStudioCode" Margin="140,20,140,140" HorizontalAlignment="Left" VerticalAlignment="Top">visual studio code</Button>
     </Grid>
 </Window>
