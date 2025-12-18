@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Numerics;
@@ -23,8 +24,9 @@ namespace MarkDownBookLauncher
     /// </summary>
     public partial class MainWindow : Window
     {
-        string dir = "C:\\Users\\ytsuk\\Documents\\MyWork\\MarkdownBook\\Doc\\_mkbook\\Plan\\";
+        string dir = "";
         string files = "";
+        string mdxPath = "";
 
         class ExeInfo
         {
@@ -36,8 +38,9 @@ namespace MarkDownBookLauncher
         ExeInfo exeFirefox = new();
         ExeInfo exeVsCode = new();
 
-        public MainWindow()
+        public MainWindow(string mdxPath)
         {
+            this.mdxPath = mdxPath;
             InitializeComponent();
             LoadSettings();
             string[] mdFiles = Directory.GetFiles(dir, "*.md");
@@ -51,6 +54,8 @@ namespace MarkDownBookLauncher
 
         private void LoadSettings()
         {
+            dir = System.IO.Path.GetDirectoryName(mdxPath) + "\\" + GetIniValue(mdxPath, "Project", "ProjectDir");
+
             string relPath = "Script\\Win\\";
             string iniFirefox = File.ReadAllText(relPath + "Firefox.ini");
             string iniVsCode = File.ReadAllText(relPath + "VisualStudioCode.ini");
