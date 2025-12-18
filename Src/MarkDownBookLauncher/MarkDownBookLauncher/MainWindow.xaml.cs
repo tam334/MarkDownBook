@@ -23,7 +23,7 @@ namespace MarkDownBookLauncher
     /// </summary>
     public partial class MainWindow : Window
     {
-        string dir = "C:\\Users\\ytsuk\\Documents\\MyWork\\MarkdownBook\\Doc\\Plan\\";
+        string dir = "C:\\Users\\ytsuk\\Documents\\MyWork\\MarkdownBook\\Doc\\_mkbook\\Plan\\";
         string files = "";
 
         class ExeInfo
@@ -40,9 +40,13 @@ namespace MarkDownBookLauncher
         {
             InitializeComponent();
             LoadSettings();
-            files += dir + "00_概要.md";
-            files += " ";
-            files += dir + "01_日報.md";
+            string[] mdFiles = Directory.GetFiles(dir, "*.md");
+            foreach (string mdFile in mdFiles)
+            {
+                files += mdFile;
+                files += " ";
+            }
+            files.Remove(files.Length - 1, 1);
         }
 
         private void LoadSettings()
