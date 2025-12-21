@@ -54,31 +54,75 @@ namespace MarkDownBookLauncher
 
         private void LoadSettings()
         {
-            dir = System.IO.Path.GetDirectoryName(mdxPath) + "\\" + GetIniValue(mdxPath, "Project", "ProjectDir");
+            string subDirPath = GetIniValue(mdxPath, "Project", "ProjectDir");
+            if (subDirPath == "")
+            {
+                MessageBox.Show("プロジェクトファイル" + mdxPath + "が開けません",
+                    "エラー",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
-            string relPath = "Script\\Win\\";
-            string iniFirefox = File.ReadAllText(relPath + "Firefox.ini");
-            string iniVsCode = File.ReadAllText(relPath + "VisualStudioCode.ini");
+            dir = System.IO.Path.GetDirectoryName(mdxPath) + "\\" + subDirPath;
+            string iniPath = AppContext.BaseDirectory + "\\Script\\Win\\";
+            string iniFirefox = "";
+            try
+            {
+                iniFirefox = File.ReadAllText(iniPath + "Firefox.ini");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("設定ファイル" + iniPath + "Firefox.ini" + "が開けません",
+                    "エラー",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
+            }
+            string iniVsCode = "";
+            try
+            {
+                iniVsCode = File.ReadAllText(iniPath + "VisualStudioCode.ini");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("設定ファイル" + iniPath + "VisualStudioCode.ini" + "が開けません",
+                    "エラー",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
+            }
 
             string sectionName = "Settings";
             {
-                string path = relPath + "Firefox.ini";
+                string path = iniPath + "Firefox.ini";
                 exeFirefox = new ExeInfo()
                 {
                     path = GetIniValue(path, sectionName, "Exe"),
                     tooltip = GetIniValue(path, sectionName, "Tooltip"),
                     arguments = GetIniValue(path, sectionName, "Arguments")
                 };
+                if(exeFirefox.path == "")
+                {
+                    MessageBox.Show("設定ファイル" + path + "の内容にエラーがあります。Exeの値が指定されていません",
+                        "エラー",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
             }
 
             {
-                string path = relPath + "VisualStudioCode.ini";
+                string path = iniPath + "VisualStudioCode.ini";
                 exeVsCode = new ExeInfo()
                 {
                     path = GetIniValue(path, sectionName, "Exe"),
                     tooltip = GetIniValue(path, sectionName, "Tooltip"),
                     arguments = GetIniValue(path, sectionName, "Arguments")
                 };
+                if (exeVsCode.path == "")
+                {
+                    MessageBox.Show("設定ファイル" + path + "の内容にエラーがあります。Exeの値が指定されていません",
+                        "エラー",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
             }
         }
 
