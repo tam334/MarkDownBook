@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="MarkdownBookCreate/MarkdownBookCreate.csproj" Id="60144849-8ca8-4a3b-9d0a-ef5465bbb14e" />
   <Project Path="MarkDownBookLauncher/MarkDownBookLauncher.csproj" />
 </Solution>

@@ -1,0 +1,18 @@
+﻿<Window x:Class="MarkdownBookCreate.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MarkdownBookCreate"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <TextBox HorizontalAlignment="Left" Margin="150,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label Content="作成するプロジェクト名称：" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top"/>
+        <Label Content="コンテンツ作成パス：" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="124,37,0,0" TextWrapping="Wrap" Text="_mkbook/" VerticalAlignment="Top" Width="120"/>
+        <Button Content="推奨パスに戻す" HorizontalAlignment="Left" Margin="249,37,0,0" VerticalAlignment="Top"/>
+        <Button Content="作成" HorizontalAlignment="Left" Margin="14,63,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
