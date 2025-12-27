@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MarkdownBookCreate": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\ytsuk\\Documents\\MyWork\\MarkdownBook\\Doc\\"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MarkDownBookLauncher": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\ytsuk\\Documents\\MyWork\\MarkdownBook\\Doc\\SampleProject.mdx"
+    }
+  }
+}

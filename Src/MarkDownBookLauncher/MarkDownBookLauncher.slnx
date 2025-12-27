@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="MarkdownBookCreate/MarkdownBookCreate.csproj" Id="60144849-8ca8-4a3b-9d0a-ef5465bbb14e" />
   <Project Path="MarkDownBookLauncher/MarkDownBookLauncher.csproj" />
+  <Project Path="MarkdownBookMove/MarkdownBookMove.csproj" Id="8a95d80a-c09c-445f-aa00-3d5e2ff8cfbc" />
 </Solution>

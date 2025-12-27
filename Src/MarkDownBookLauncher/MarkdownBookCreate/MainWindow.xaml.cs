@@ -16,9 +16,22 @@ namespace MarkdownBookCreate
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        string defaultPath = "_mkbook/";
+
+        public MainWindow(string dirPath)
         {
             InitializeComponent();
+            tbPath.Text = DefaultPath();
+        }
+
+        private void OnClickRevert(object sender, RoutedEventArgs e)
+        {
+            this.tbPath.Text = DefaultPath();
+        }
+
+        private string DefaultPath()
+        {
+            return defaultPath + tbProjName.Text + "/";
         }
     }
 }
