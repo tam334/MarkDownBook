@@ -7,7 +7,29 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Height="30" Width="100" Click="OnClickFirefox" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top">Firefox</Button>
-        <Button Height="30" Width="100" Click="OnClickVisualStudioCode" Margin="140,20,140,140" HorizontalAlignment="Left" VerticalAlignment="Top">visual studio code</Button>
+        <TabControl>
+            <TabItem Header="開く">
+                <Grid Background="#FFE5E5E5">
+                    <Button Height="30" Width="100" Click="OnClickFirefox" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top">Firefox</Button>
+                    <Button Height="30" Width="100" Click="OnClickVisualStudioCode" Margin="140,20,140,140" HorizontalAlignment="Left" VerticalAlignment="Top">visual studio code</Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="新規">
+                <Grid Background="#FFE5E5E5">
+                </Grid>
+            </TabItem>
+            <TabItem Header="移動">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="移動元" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <Label Content="移動先" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+                    <TextBox HorizontalAlignment="Left" Margin="61,14,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="568"/>
+                    <TextBox HorizontalAlignment="Left" Margin="61,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="568"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="表作成支援">
+                <Grid Background="#FFE5E5E5">
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
