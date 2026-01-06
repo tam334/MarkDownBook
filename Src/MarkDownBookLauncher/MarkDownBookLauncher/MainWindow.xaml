@@ -10,12 +10,18 @@
         <TabControl>
             <TabItem Header="開く">
                 <Grid Background="#FFE5E5E5">
-                    <Button Height="30" Width="100" Click="OnClickFirefox" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top">Firefox</Button>
-                    <Button Height="30" Width="100" Click="OnClickVisualStudioCode" Margin="140,20,140,140" HorizontalAlignment="Left" VerticalAlignment="Top">visual studio code</Button>
+                    <Button Name="btFirefox" Height="30" Width="100" Command="{Binding OpenFirefoxCommand}" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top">Firefox</Button>
+                    <Button Name="btVSCode" Height="30" Width="100" Command="{Binding OpenVisualStudioCodeCommand}" Margin="140,20,140,140" HorizontalAlignment="Left" VerticalAlignment="Top">visual studio code</Button>
                 </Grid>
             </TabItem>
             <TabItem Header="新規">
                 <Grid Background="#FFE5E5E5">
+                    <TextBox Name="tbProjName" HorizontalAlignment="Left" Margin="150,10,0,0" TextWrapping="Wrap" Text="{Binding Path=ProjName}" VerticalAlignment="Top" Width="120"/>
+                    <Label Content="作成するプロジェクト名称：" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top"/>
+                    <Label Content="コンテンツ作成パス：" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top"/>
+                    <TextBox Name="tbPath" HorizontalAlignment="Left" Margin="124,37,0,0" TextWrapping="Wrap" Text="{Binding Path=CreatePath}"  VerticalAlignment="Top" Width="120"/>
+                    <Button Content="推奨パスに戻す" HorizontalAlignment="Left" Margin="249,37,0,0" VerticalAlignment="Top" Click="OnClickRevert"/>
+                    <Button Content="作成" HorizontalAlignment="Left" Margin="14,63,0,0" VerticalAlignment="Top" Click="OnClickCreate"/>
                 </Grid>
             </TabItem>
             <TabItem Header="移動">

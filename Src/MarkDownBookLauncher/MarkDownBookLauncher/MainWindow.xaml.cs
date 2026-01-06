@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarkDownBookLauncher.ViewModel;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -24,145 +25,25 @@ namespace MarkDownBookLauncher
     /// </summary>
     public partial class MainWindow : Window
     {
-        string dir = "";
-        string files = "";
-        string mdxPath = "";
-
-        class ExeInfo
-        {
-            public string path = "";
-            public string tooltip = "";
-            public string arguments = "";
-        };
-
-        ExeInfo exeFirefox = new();
-        ExeInfo exeVsCode = new();
+        VMOpenBook vmOpenBook;
+        VMCreateBook vmCreateBook = new();
 
         public MainWindow(string mdxPath)
         {
-            this.mdxPath = mdxPath;
             InitializeComponent();
-            LoadSettings();
-            string[] mdFiles = Directory.GetFiles(dir, "*.md");
-            foreach (string mdFile in mdFiles)
-            {
-                files += mdFile;
-                files += " ";
-            }
-            files.Remove(files.Length - 1, 1);
+            vmOpenBook = new VMOpenBook(mdxPath);
+            btFirefox.DataContext = vmOpenBook;
+            btVSCode.DataContext = vmOpenBook;
         }
 
-        private void LoadSettings()
+        private void OnClickRevert(object sender, RoutedEventArgs e)
         {
-            string subDirPath = GetIniValue(mdxPath, "Project", "ProjectDir");
-            if (subDirPath == "")
-            {
-                MessageBox.Show("プロジェクトファイル" + mdxPath + "が開けません",
-                    "エラー",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            dir = System.IO.Path.GetDirectoryName(mdxPath) + "\\" + subDirPath;
-            string iniPath = AppContext.BaseDirectory + "\\Script\\Win\\";
-            string iniFirefox = "";
-            try
-            {
-                iniFirefox = File.ReadAllText(iniPath + "Firefox.ini");
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("設定ファイル" + iniPath + "Firefox.ini" + "が開けません",
-                    "エラー",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                throw;
-            }
-            string iniVsCode = "";
-            try
-            {
-                iniVsCode = File.ReadAllText(iniPath + "VisualStudioCode.ini");
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("設定ファイル" + iniPath + "VisualStudioCode.ini" + "が開けません",
-                    "エラー",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                throw;
-            }
-
-            string sectionName = "Settings";
-            {
-                string path = iniPath + "Firefox.ini";
-                exeFirefox = new ExeInfo()
-                {
-                    path = GetIniValue(path, sectionName, "Exe"),
-                    tooltip = GetIniValue(path, sectionName, "Tooltip"),
-                    arguments = GetIniValue(path, sectionName, "Arguments")
-                };
-                if(exeFirefox.path == "")
-                {
-                    MessageBox.Show("設定ファイル" + path + "の内容にエラーがあります。Exeの値が指定されていません",
-                        "エラー",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-            }
-
-            {
-                string path = iniPath + "VisualStudioCode.ini";
-                exeVsCode = new ExeInfo()
-                {
-                    path = GetIniValue(path, sectionName, "Exe"),
-                    tooltip = GetIniValue(path, sectionName, "Tooltip"),
-                    arguments = GetIniValue(path, sectionName, "Arguments")
-                };
-                if (exeVsCode.path == "")
-                {
-                    MessageBox.Show("設定ファイル" + path + "の内容にエラーがあります。Exeの値が指定されていません",
-                        "エラー",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-            }
         }
 
-        private void OnClickFirefox(object sender, RoutedEventArgs e)
+        private void OnClickCreate(object sender, RoutedEventArgs e)
         {
-            Process process = new Process();
-            process.StartInfo.FileName = exeFirefox.path;
-            process.StartInfo.Arguments = ParseArgument(exeFirefox.arguments);
-            process.Start();
         }
 
-        private void OnClickVisualStudioCode(object sender, RoutedEventArgs e)
-        {
-            Process process = new Process();
-            process.StartInfo.FileName = exeVsCode.path;
-            process.StartInfo.Arguments = ParseArgument(exeVsCode.arguments);
-            process.Start();
-        }
 
-        private string ParseArgument(string argument)
-        {
-            string tmp = argument.Replace("(dir)", dir);
-            tmp = tmp.Replace("(files)", files);
-            return tmp;
-        }
-
-        [DllImport("kernel32.dll")]
-        private static extern int GetPrivateProfileString(
-            string lpApplicationName,
-            string lpKeyName,
-            string lpDefault,
-            StringBuilder lpReturnedstring,
-            int nSize,
-            string lpFileName);
-
-        public static string GetIniValue(string path, string section, string key)
-        {
-            StringBuilder sb = new StringBuilder(256);
-            GetPrivateProfileString(section, key, string.Empty, sb, sb.Capacity, path);
-            return sb.ToString();
-        }
     }
 }
