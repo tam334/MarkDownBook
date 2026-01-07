@@ -34,6 +34,11 @@ namespace MarkDownBookLauncher
             vmOpenBook = new VMOpenBook(mdxPath);
             btFirefox.DataContext = vmOpenBook;
             btVSCode.DataContext = vmOpenBook;
+
+            tbPath.DataContext = vmCreateBook;
+            tbProjName.DataContext = vmCreateBook;
+            btRevert.DataContext = vmCreateBook;
+            btCreate.DataContext = vmCreateBook;
         }
 
         private void OnClickRevert(object sender, RoutedEventArgs e)
