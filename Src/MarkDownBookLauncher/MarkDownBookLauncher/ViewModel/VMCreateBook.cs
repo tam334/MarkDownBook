@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace MarkDownBookLauncher.ViewModel
 {
-    internal class VMCreateBook
+    internal class VMCreateBook : INotifyPropertyChanged
     {
         string defaultPath = "_mkbook/";
         string _createPath = "";
