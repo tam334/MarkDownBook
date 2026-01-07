@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -14,12 +15,15 @@ namespace MarkDownBookLauncher.ViewModel
 
         public RelayCommand CommandRevert { get; set;  }
         public RelayCommand CommandCreate { get; set;  }
+        public RelayCommand CommandSelectDir { get; set; }
 
         public VMCreateBook()
         {
-            CreatePath = DefaultPath();
+            ProjRelPath = DefaultPath();
+            CreatePath = "C:\\";
             CommandRevert = new RelayCommand(OnClickRevert, () => true);
             CommandCreate = new RelayCommand(OnClickCreate, () => true);
+            CommandSelectDir = new RelayCommand(OnClickSelectDir, () => true);
         }
 
         public string CreatePath
@@ -43,6 +47,17 @@ namespace MarkDownBookLauncher.ViewModel
             }
         }
 
+        string _projRelPath = "";
+        public string ProjRelPath
+        {
+            get => _projRelPath;
+            set
+            {
+                _projRelPath = value;
+                OnPropertyChanged(nameof(ProjRelPath));
+            }
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -53,12 +68,12 @@ namespace MarkDownBookLauncher.ViewModel
 
         private void OnClickRevert()
         {
-            CreatePath = DefaultPath();
+            ProjRelPath = DefaultPath();
         }
 
         private void OnClickCreate()
         {
-            string path = System.Environment.CurrentDirectory + "\\" + CreatePath;
+            string path = CreatePath + "\\" + ProjRelPath;
             Directory.CreateDirectory(path);
             Environment.Exit(0);
         }
@@ -66,6 +81,22 @@ namespace MarkDownBookLauncher.ViewModel
         private string DefaultPath()
         {
             return defaultPath + ProjName + "/";
+        }
+
+        private void OnClickSelectDir()
+        {
+            var ofd = new OpenFolderDialog()
+            {
+                Multiselect = false
+            };
+            bool? result = ofd.ShowDialog();
+            if (result is bool r)
+            {
+                if (r)
+                {
+                    CreatePath = ofd.FolderName;
+                }
+            }
         }
     }
 }
