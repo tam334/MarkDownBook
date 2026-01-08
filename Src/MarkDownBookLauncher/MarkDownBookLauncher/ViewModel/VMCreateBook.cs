@@ -10,7 +10,7 @@ namespace MarkDownBookLauncher.ViewModel
 {
     internal class VMCreateBook : INotifyPropertyChanged
     {
-        string defaultPath = "_mkbook/";
+        string defaultPath = "_mkbook\\";
         string _createPath = "";
 
         public RelayCommand CommandRevert { get; set;  }
@@ -75,12 +75,17 @@ namespace MarkDownBookLauncher.ViewModel
         {
             string path = CreatePath + "\\" + ProjRelPath;
             Directory.CreateDirectory(path);
+            //プロジェクトファイル作成
+            string projFile = CreatePath + "\\" + ProjName + ".mdx";
+            File.WriteAllText(projFile,
+                string.Format("[Project]\r\nProjectDir={0}\n", ProjRelPath));
+            File.Copy(AppContext.BaseDirectory + "\\Template\\Template.md", path + "\\Template.md");
             Environment.Exit(0);
         }
 
         private string DefaultPath()
         {
-            return defaultPath + ProjName + "/";
+            return defaultPath + ProjName;
         }
 
         private void OnClickSelectDir()

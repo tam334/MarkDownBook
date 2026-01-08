@@ -15,6 +15,13 @@
     <None Update="Script\Win\VisualStudioCode.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Template\Template.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Template\" />
   </ItemGroup>
 
 </Project>
