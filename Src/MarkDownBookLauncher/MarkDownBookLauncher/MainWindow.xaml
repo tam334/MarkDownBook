@@ -17,6 +17,7 @@
                     <Button Name="btVSCode" Height="30" Width="100" Command="{Binding OpenVisualStudioCodeCommand}" Margin="140,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">visual studio code</Button>
                     <TextBox Name="tbOpenOpenFile" HorizontalAlignment="Left" Margin="95,59,0,0" TextWrapping="Wrap" Text="{Binding Path=OpenFile}" VerticalAlignment="Top" Width="577"/>
                     <Label Content="開くファイル：" HorizontalAlignment="Left" Margin="20,55,0,0" VerticalAlignment="Top"/>
+                    <Button Name="btOpenSelectProj" Content="..." Command="{Binding CommandOpen}" HorizontalAlignment="Left" Margin="689,58,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="新規">
@@ -38,10 +39,6 @@
                     <Label Content="移動先" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
                     <TextBox HorizontalAlignment="Left" Margin="61,14,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="568"/>
                     <TextBox HorizontalAlignment="Left" Margin="61,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="568"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="表作成支援">
-                <Grid Background="#FFE5E5E5">
                 </Grid>
             </TabItem>
         </TabControl>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -15,8 +16,6 @@ namespace MarkDownBookLauncher.ViewModel
 {
     internal class VMOpenBook : INotifyPropertyChanged
     {
-        string dir = "";
-        string files = "";
 
         class ExeInfo
         {
@@ -39,6 +38,8 @@ namespace MarkDownBookLauncher.ViewModel
             }
         }
 
+        public RelayCommand CommandOpen { get; set; }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -50,30 +51,14 @@ namespace MarkDownBookLauncher.ViewModel
             this.OpenFile = mdxPath;
             LoadSettings();
 
-            string[] mdFiles = Directory.GetFiles(dir, "*.md");
-            foreach (string mdFile in mdFiles)
-            {
-                files += mdFile;
-                files += " ";
-            }
-            files.Remove(files.Length - 1, 1);
-
             OpenFirefoxCommand = new OpenFirefoxCommandImpl(this);
             OpenVisualStudioCodeCommand = new OpenVisualStudioCodeCommandImpl(this);
+
+            CommandOpen = new RelayCommand(SelectProj, () => true);
         }
 
         private void LoadSettings()
         {
-            string subDirPath = GetIniValue(OpenFile, "Project", "ProjectDir");
-            if (subDirPath == "")
-            {
-                MessageBox.Show("プロジェクトファイル" + OpenFile + "が開けません",
-                    "エラー",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            dir = System.IO.Path.GetDirectoryName(OpenFile) + "\\" + subDirPath;
             string iniPath = AppContext.BaseDirectory + "\\Script\\Win\\";
             string iniFirefox = "";
             try
@@ -134,6 +119,32 @@ namespace MarkDownBookLauncher.ViewModel
                     return;
                 }
             }
+        }
+
+        string SubDirPath()
+        {
+            string subDirPath = GetIniValue(OpenFile, "Project", "ProjectDir");
+            if (subDirPath == "")
+            {
+                MessageBox.Show("プロジェクトファイル" + OpenFile + "が開けません",
+                    "エラー",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return "";
+            }
+            return System.IO.Path.GetDirectoryName(OpenFile) + "\\" + subDirPath;
+        }
+
+        string SubFiles()
+        {
+            string[] mdFiles = Directory.GetFiles(SubDirPath(), "*.md");
+            string files = "";
+            foreach (string mdFile in mdFiles)
+            {
+                files += mdFile;
+                files += " ";
+            }
+            files.Remove(files.Length - 1, 1);
+            return files;
         }
 
         public ICommand OpenFirefoxCommand
@@ -215,9 +226,26 @@ namespace MarkDownBookLauncher.ViewModel
 
         internal string ParseArgument(string argument)
         {
-            string tmp = argument.Replace("(dir)", dir);
-            tmp = tmp.Replace("(files)", files);
+            string tmp = argument.Replace("(dir)", SubDirPath());
+            tmp = tmp.Replace("(files)", SubFiles());
             return tmp;
+        }
+
+        void SelectProj()
+        {
+            var ofd = new OpenFileDialog()
+            {
+                Filter = "MarkdownBook|*.mdx",
+                Multiselect = false
+            };
+            bool? result = ofd.ShowDialog();
+            if (result is bool r)
+            {
+                if (r)
+                {
+                    OpenFile = ofd.FileName;
+                }
+            }
         }
 
         [DllImport("kernel32.dll")]

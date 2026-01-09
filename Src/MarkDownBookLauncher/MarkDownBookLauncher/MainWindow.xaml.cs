@@ -35,6 +35,7 @@ namespace MarkDownBookLauncher
             tbOpenOpenFile.DataContext = vmOpenBook;
             btFirefox.DataContext = vmOpenBook;
             btVSCode.DataContext = vmOpenBook;
+            btOpenSelectProj.DataContext = vmOpenBook;
 
             tbCreatePath.DataContext = vmCreateBook;
             tbProjName.DataContext = vmCreateBook;
