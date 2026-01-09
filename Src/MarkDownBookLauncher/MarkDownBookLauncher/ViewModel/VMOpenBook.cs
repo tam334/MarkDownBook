@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -12,9 +13,8 @@ using File = System.IO.File;
 
 namespace MarkDownBookLauncher.ViewModel
 {
-    internal class VMOpenBook
+    internal class VMOpenBook : INotifyPropertyChanged
     {
-        string mdxPath = "";
         string dir = "";
         string files = "";
 
@@ -28,9 +28,26 @@ namespace MarkDownBookLauncher.ViewModel
         ExeInfo exeFirefox = new();
         ExeInfo exeVsCode = new();
 
+        string _openFile = "";
+        public string OpenFile
+        {
+            get => _openFile;
+            set
+            {
+                _openFile = value;
+                OnPropertyChanged(nameof(OpenFile));
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public VMOpenBook(string mdxPath)
         {
-            this.mdxPath = mdxPath;
+            this.OpenFile = mdxPath;
             LoadSettings();
 
             string[] mdFiles = Directory.GetFiles(dir, "*.md");
@@ -47,16 +64,16 @@ namespace MarkDownBookLauncher.ViewModel
 
         private void LoadSettings()
         {
-            string subDirPath = GetIniValue(mdxPath, "Project", "ProjectDir");
+            string subDirPath = GetIniValue(OpenFile, "Project", "ProjectDir");
             if (subDirPath == "")
             {
-                MessageBox.Show("プロジェクトファイル" + mdxPath + "が開けません",
+                MessageBox.Show("プロジェクトファイル" + OpenFile + "が開けません",
                     "エラー",
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            dir = System.IO.Path.GetDirectoryName(mdxPath) + "\\" + subDirPath;
+            dir = System.IO.Path.GetDirectoryName(OpenFile) + "\\" + subDirPath;
             string iniPath = AppContext.BaseDirectory + "\\Script\\Win\\";
             string iniFirefox = "";
             try

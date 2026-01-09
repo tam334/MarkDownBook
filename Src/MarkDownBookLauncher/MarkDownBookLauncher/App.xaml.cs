@@ -12,14 +12,9 @@ namespace MarkDownBookLauncher
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            string mdxPath = "C:\\Users\\ytsuk\\Documents\\MyWork\\MarkdownBook\\Doc\\SampleProject.mdx";
+            string mdxPath = "";
             if (e.Args.Length == 0)
             {
-                MessageBox.Show("ファイルパスが指定されていません",
-                   "エラー",
-                   MessageBoxButton.OK,
-                   MessageBoxImage.Error);
-                Environment.Exit(1);
             }
             else
             {

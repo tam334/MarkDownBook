@@ -32,6 +32,7 @@ namespace MarkDownBookLauncher
         {
             InitializeComponent();
             vmOpenBook = new VMOpenBook(mdxPath);
+            tbOpenOpenFile.DataContext = vmOpenBook;
             btFirefox.DataContext = vmOpenBook;
             btVSCode.DataContext = vmOpenBook;
 
